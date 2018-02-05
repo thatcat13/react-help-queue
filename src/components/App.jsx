@@ -1,6 +1,6 @@
-import React from "react";
-import TicketList from "./TicketList";
-import Header from "./Header";
+import React from 'react';
+import TicketList from './TicketList';
+import Header from './Header';
 //TicketList has to be BEFORE Header, FYI
 
 function App(){
