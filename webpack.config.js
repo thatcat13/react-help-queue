@@ -58,20 +58,33 @@ module.exports = {
 
   module: {
       rules: [
+//Because we've configured our linter to work as a Webpack loader, ESLint will now automatically check our code whenever Webpack bundles it. (Even during hot module replacement while the dev server is live!)
+
+//We'll add our new eslint-loader to the rules array in our webpack.config.js file, right before our "babel-loader" rule, like this:
         {
-        test: /\.jsx?$/,
-        loader: "babel-loader",
-        exclude: /node_modules/,
-        options: {
-          presets: [
-            ["es2015", {"modules": false}],
-            "react",
-          ],
-          plugins: [
-            "react-hot-loader/babel"
-          ]
+          test: /\.jsx?$/,
+          enforce: "pre",
+          loader: "eslint-loader",
+          exclude: /node_modules/,
+          options: {
+            emitWarning: true,
+            configFile: "./.eslintrc.json"
+            }
+          },
+          {
+          test: /\.jsx?$/,
+          loader: "babel-loader",
+          exclude: /node_modules/,
+          options: {
+            presets: [
+              ["es2015", {"modules": false}],
+              "react",
+            ],
+            plugins: [
+              "react-hot-loader/babel"
+            ]
+          }
         }
-      }
     ]
   },
   // Here we've instructed Webpack to use Babel as a loader. A loader is an additional library that works with Webpack to pre-process code before Webpack bundles it. This process is sometimes called a transformation.
