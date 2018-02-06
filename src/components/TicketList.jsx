@@ -3,25 +3,30 @@ import Ticket from './Ticket';
 
 var masterTicketList = [
   {
-    names: 'Thato and Haley',
-    location: '3A',
+    names: 'Tyler and Cat',
+    location: '2E',
     issue: 'Firebase won\'t save record. Halp.'
   },
   {
-    names: 'Sleater and Kinney',
+    names: 'El and Mike',
     location: '4B',
     issue: 'Fox image not displaying on page, can only see duck?'
   },
   {
-    names: 'Imani & Jacob',
+    names: 'Wizard and Witch',
     location: '9F',
     issue: 'Donkey picture not displaying on hover in Zoology app. :('
   }
 ];
 
 function TicketList(){
+  var myStyledComponentStyles = {
+    backgroundColor: '#ecf0f1',
+    fontFamily: 'sans-serif',
+    paddingTop: '50px'
+  }
   return (
-    <div>
+    <div style={myStyledComponentStyles}>
       <hr/>
       {masterTicketList.map((ticket, index) =>
         <Ticket names={ticket.names}
