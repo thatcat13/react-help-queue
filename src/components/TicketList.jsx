@@ -3,7 +3,7 @@ import Ticket from './Ticket';
 
 var masterTicketList = [
   {
-    names: 'Tyler and Cat',
+    names: 'Scully and Mulder',
     location: '2E',
     issue: 'Firebase won\'t save record. Halp.'
   },
