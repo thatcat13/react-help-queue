@@ -1,25 +1,10 @@
 import React from 'react';
 import Ticket from './Ticket';
+import PropTypes from 'prop-types';
 
-var masterTicketList = [
-  {
-    names: 'Scully and Mulder',
-    location: '2E',
-    issue: 'Firebase won\'t save record. Halp.'
-  },
-  {
-    names: 'El and Mike',
-    location: '4B',
-    issue: 'Fox image not displaying on page, can only see duck?'
-  },
-  {
-    names: 'Wizard and Witch',
-    location: '9F',
-    issue: 'Donkey picture not displaying on hover in Zoology app. :('
-  }
-];
 
-function TicketList(){
+function TicketList(props){
+  console.log(props.ticketList);
   var myStyledComponentStyles = {
     backgroundColor: '#ecf0f1',
     fontFamily: 'sans-serif',
@@ -28,14 +13,18 @@ function TicketList(){
   return (
     <div style={myStyledComponentStyles}>
       <hr/>
-      {masterTicketList.map((ticket, index) =>
+      {props.ticketList.map((ticket) =>
         <Ticket names={ticket.names}
           location={ticket.location}
           issue={ticket.issue}
-          key={index}/>
+          key={ticket.id}/>
       )}
     </div>
   );
 }
+
+TicketList.propTypes = {
+  ticketList: PropTypes.array
+};
 
 export default TicketList;
