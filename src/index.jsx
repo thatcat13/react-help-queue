@@ -4,13 +4,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import { AppContainer } from 'react-hot-loader';
+import { HashRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 //define render function here:
 const render = (Component) => {
   //Component is a constructor or a function; the word "Component" is a parameter and can be called anything
   ReactDOM.render(
     <AppContainer>
-      <Component/>
+      <HashRouter>
+        <Component/>      
+      </HashRouter>
     </AppContainer>,
     document.getElementById('react-app-root')
   );
