@@ -24,6 +24,11 @@ class App extends React.Component {
 
     return (
       <div>
+        <style jsx global>{`
+        body {
+          font-family: 'Roboto Mono', monospace;
+        }
+        `}</style>
         <Header/>
         <Switch>
           <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />

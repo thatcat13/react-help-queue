@@ -62,6 +62,16 @@ module.exports = {
 
 //We'll add our new eslint-loader to the rules array in our webpack.config.js file, right before our "babel-loader" rule, like this:
         {
+          test: /\.(png|gif|jp(e*)g|svg)$/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 8000,
+              name: 'images/[hash]-[name].[ext]'
+            }
+          }
+        },
+        {
           test: /\.jsx?$/,
           enforce: "pre",
           loader: "eslint-loader",
