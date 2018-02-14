@@ -46,10 +46,10 @@ function Header(){
             text-decoration: underline;
           }
             `}</style>
-          <h1 className="hq">Help Queue</h1><br></br>
-          <div className="links">
-            <Link to="/">Home </Link><Link to="/newticket">Create Ticket</Link>
-          </div>
+      <h1 className="hq">Help Queue</h1><br></br>
+      <div className="links">
+        <Link to="/">Home </Link><Link to="/newticket">Create Ticket</Link>
+      </div>
     </div>
   );
 }

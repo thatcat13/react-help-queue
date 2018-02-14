@@ -8,7 +8,8 @@ function TicketList(props){
   var myStyledComponentStyles = {
     backgroundColor: '#ecf0f1',
     fontFamily: 'sans-serif',
-    paddingTop: '50px'
+    paddingTop: '50px',
+    margin: '0 25px'
   };
   return (
     <div style={myStyledComponentStyles}>
@@ -17,6 +18,7 @@ function TicketList(props){
         <Ticket names={ticket.names}
           location={ticket.location}
           issue={ticket.issue}
+          formattedWaitTime={ticket.formattedWaitTime}
           key={ticket.id}/>
       )}
     </div>

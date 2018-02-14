@@ -3,6 +3,7 @@ import TicketList from './TicketList';
 import Header from './Header';
 import { Switch, Route } from 'react-router-dom';
 import NewTicketControl from './NewTicketControl';
+import Moment from 'moment';
 
 
 class App extends React.Component {
@@ -14,14 +15,60 @@ class App extends React.Component {
     this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
   }
 
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() =>
+      this.updateTicketElapsedWaitTime(),
+    60000
+    );
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.waitTimeUpdateTimer);
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount');
+  }
+
+  componentWillReceiveProps() {
+    console.log('componentWillReceiveProps');
+  }
+
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate');
+    return true;
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate');
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
+
+  updateTicketElapsedWaitTime() {
+    console.log('checkedy check');
+    let newMasterTicketList = this.state.masterTicketList.slice();
+    newMasterTicketList.forEach((ticket) =>
+    ticket.formattedWaitTime = (ticket.timeOpen).fromNow(true)
+  );
+  this.setState({masterTicketList: newMasterTicketList});
+}
   handleAddingNewTicketToList(newTicket){
     let newMasterTicketList = this.state.masterTicketList.slice();
+    newTicket.formattedWaitTime = (newTicket.timeOpen).fromNow(true)
     newMasterTicketList.push(newTicket);
     this.setState({masterTicketList: newMasterTicketList});
   }
+  //handleAddingNewTicketToList() callback from App.jsx is triggered when our form in NewTicketForm is submitted
   //We can only alter state using setState(). And setState() takes a key value pair: The state value we're updating (masterTicketList in our case), and the new value we'd like to update it to.
+
   render() {
 
+    const container = {
+      margin: '15px 35px'
+    };
     return (
       <div>
         <style jsx global>{`
@@ -30,10 +77,12 @@ class App extends React.Component {
         }
         `}</style>
         <Header/>
-        <Switch>
-          <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />
-          <Route path='/newticket' render={()=> <NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />
-        </Switch>
+        <div style={container}>
+          <Switch>
+            <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />
+            <Route path='/newticket' render={()=> <NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />
+          </Switch>
+        </div>
       </div>
     );
   }
