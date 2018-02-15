@@ -4,15 +4,19 @@ import Header from './Header';
 import { Switch, Route } from 'react-router-dom';
 import NewTicketControl from './NewTicketControl';
 import Moment from 'moment';
+import Admin from './Admin';
+import { v4 } from 'uuid';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      masterTicketList: []
+      masterTicketList: [],
+      selectedTicket: null
     };
     this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
+    this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this);
   }
 
   componentDidMount() {
@@ -48,24 +52,30 @@ class App extends React.Component {
   }
 
   updateTicketElapsedWaitTime() {
-    console.log('checkedy check');
-    let newMasterTicketList = this.state.masterTicketList.slice();
-    newMasterTicketList.forEach((ticket) =>
-    ticket.formattedWaitTime = (ticket.timeOpen).fromNow(true)
-  );
-  this.setState({masterTicketList: newMasterTicketList});
-}
+    var newMasterTicketList = Object.assign({}, this.state.masterTicketList);
+    Object.keys(newMasterTicketList).forEach(ticketId => {
+      newMasterTicketList[ticketId].formattedWaitTime = (newMasterTicketList[ticketId].timeOpen).fromNow(true);
+    });
+    this.setState({masterTicketList: newMasterTicketList});
+  }
+
   handleAddingNewTicketToList(newTicket){
-    let newMasterTicketList = this.state.masterTicketList.slice();
-    newTicket.formattedWaitTime = (newTicket.timeOpen).fromNow(true)
-    newMasterTicketList.push(newTicket);
+    var newTicketId = v4()
+    var newMasterTicketList = Object.assign({}, this.state.masterTicketList, {
+      [newTicket.id]: newTicket
+    });
+    newMasterTicketList[newTicket.id].formattedWaitTime = newMasterTicketList[newTicket.id].timeOpen.fromNow(true);
     this.setState({masterTicketList: newMasterTicketList});
   }
   //handleAddingNewTicketToList() callback from App.jsx is triggered when our form in NewTicketForm is submitted
   //We can only alter state using setState(). And setState() takes a key value pair: The state value we're updating (masterTicketList in our case), and the new value we'd like to update it to.
 
-  render() {
+  handleChangingSelectedTicket(ticketId){
+    this.setState({selectedTicket: ticketId});
+  }
 
+  render() {
+    console.log(this.state.masterTicketList);
     const container = {
       margin: '15px 35px'
     };
@@ -81,6 +91,9 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />
             <Route path='/newticket' render={()=> <NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />
+            <Route path='/admin' render={(props)=><Admin ticketList={this.state.masterTicketList} currentRouterPath={props.location.pathname}
+              onTicketSelection={this.handleChangingSelectedTicket}
+              selectedTicket={this.state.selectedTicket}/>} />
           </Switch>
         </div>
       </div>
