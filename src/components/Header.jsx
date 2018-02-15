@@ -20,7 +20,7 @@ function Header(){
 
           .hq {
             color: white;
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 3px 2px 3px black;
             font-size: 100px;
             text-align: center;
           }
@@ -35,7 +35,7 @@ function Header(){
           }
           a {
             color: white;
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 3px 2px 3px black;
             font-size: 2em;
             text-decoration: none;
             padding: 20px;
@@ -46,7 +46,7 @@ function Header(){
             `}</style>
       <h1 className="hq">Help Queue</h1><br></br>
       <div className="links">
-        <Link to="/">Home </Link> | <Link to="/newticket">Create Ticket</Link>
+        <Link to="/">Home </Link> | <Link to="/newticket">Create Ticket</Link>| <Link to="/admin">Admins Only</Link>
       </div>
     </div>
   );
