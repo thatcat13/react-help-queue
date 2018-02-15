@@ -23,7 +23,7 @@ class NewTicketControl extends React.Component {
   handleTroubleshootingConfirmation(){
     this.setState({formVisibleOnPage: true});
   }
-  //formVisibleOnPage is null unless bound in class constructor! 
+  //formVisibleOnPage is null unless bound in class constructor!
 
 
 
@@ -34,7 +34,7 @@ class NewTicketControl extends React.Component {
     if (this.state.formVisibleOnPage){
       currentlyVisibleContent = <NewTicketForm onNewTicketCreation={this.props.onNewTicketCreation}/>;
     } else {
-      currentlyVisibleContent = <ConfirmationQuestions onTroubleShootingConfirmation={this.handleTroubleshootingConfirmation} />;
+      currentlyVisibleContent = <ConfirmationQuestions onTroubleshootingConfirmation={this.handleTroubleshootingConfirmation}/>;
     }
     return (
       <div>

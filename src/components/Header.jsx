@@ -1,15 +1,13 @@
 import React from 'react';
-import halp from './../halp.jpg';
-import benders from './../benders.jpg';
 import { Link } from 'react-router-dom';
+import benders from './../benders.jpg';
 
 
 function Header(){
-  var anotherStyledComponentStyles = {
+  const anotherStyledComponentStyles = {
     backgroundImage: `url(${benders})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    // fontFamily: 'monospace',
     paddingTop: '100px',
     display: 'flex',
     flexDirection: 'column',
@@ -48,11 +46,10 @@ function Header(){
             `}</style>
       <h1 className="hq">Help Queue</h1><br></br>
       <div className="links">
-        <Link to="/">Home </Link><Link to="/newticket">Create Ticket</Link>
+        <Link to="/">Home </Link> | <Link to="/newticket">Create Ticket</Link>
       </div>
     </div>
   );
 }
 
 export default Header;
-// <img src={halp} />

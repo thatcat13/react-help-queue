@@ -1,18 +1,18 @@
 import React from 'react';
-import TicketList from './TicketList';
 import Header from './Header';
-import { Switch, Route } from 'react-router-dom';
+import TicketList from './TicketList';
 import NewTicketControl from './NewTicketControl';
+import { Switch, Route } from 'react-router-dom';
 import Moment from 'moment';
 import Admin from './Admin';
 import { v4 } from 'uuid';
 
-
 class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      masterTicketList: [],
+      masterTicketList: {},
       selectedTicket: null
     };
     this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
@@ -30,27 +30,6 @@ class App extends React.Component {
     clearInterval(this.waitTimeUpdateTimer);
   }
 
-  componentWillMount() {
-    console.log('componentWillMount');
-  }
-
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
-  }
-
-  shouldComponentUpdate() {
-    console.log('shouldComponentUpdate');
-    return true;
-  }
-
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-  }
-
   updateTicketElapsedWaitTime() {
     var newMasterTicketList = Object.assign({}, this.state.masterTicketList);
     Object.keys(newMasterTicketList).forEach(ticketId => {
@@ -62,9 +41,9 @@ class App extends React.Component {
   handleAddingNewTicketToList(newTicket){
     var newTicketId = v4()
     var newMasterTicketList = Object.assign({}, this.state.masterTicketList, {
-      [newTicket.id]: newTicket
+      [newTicketId]: newTicket
     });
-    newMasterTicketList[newTicket.id].formattedWaitTime = newMasterTicketList[newTicket.id].timeOpen.fromNow(true);
+    newMasterTicketList[newTicketId].formattedWaitTime = newMasterTicketList[newTicketId].timeOpen.fromNow(true);
     this.setState({masterTicketList: newMasterTicketList});
   }
   //handleAddingNewTicketToList() callback from App.jsx is triggered when our form in NewTicketForm is submitted
@@ -86,20 +65,24 @@ class App extends React.Component {
           font-family: 'Roboto Mono', monospace;
         }
         `}</style>
-        <Header/>
+
         <div style={container}>
+          <Header/>
           <Switch>
             <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />
-            <Route path='/newticket' render={()=> <NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />
+            <Route path='/newticket' render={()=><NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />
             <Route path='/admin' render={(props)=><Admin ticketList={this.state.masterTicketList} currentRouterPath={props.location.pathname}
               onTicketSelection={this.handleChangingSelectedTicket}
               selectedTicket={this.state.selectedTicket}/>} />
+
           </Switch>
         </div>
       </div>
-    );
-  }
-}
+        );
+        }
+
+        }
+
 
 export default App;
 
