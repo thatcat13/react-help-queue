@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
+import { connect } from 'react-redux';
 
 function NewTicketForm(props){
   let _names = null;
@@ -8,7 +9,18 @@ function NewTicketForm(props){
   let _issue = null;
 
   function handleNewTicketFormSubmission(event) {
+    const { dispatch } = props;
     event.preventDefault();
+    const action = {
+      type: 'ADD_TICKET',
+      id: null,
+      names: _names.value,
+      location: _location.value,
+      issue: _issue.value,
+      timeOpen: new Moment()
+    };
+    dispatch(action);
+    //calling action invokes 'ADD_TICKET' in reducer.js
     props.onNewTicketCreation({names: _names.value, location: _location.value, issue: _issue.value, timeOpen: new Moment()});
 //callback called timeOpen and set it equivalent to a Moment object containing the current time.
     _names.value = '';
@@ -87,4 +99,8 @@ function NewTicketForm(props){
         onNewTicketCreation: PropTypes.func
       };
 
+      NewTicketForm = connect()(NewTicketForm);
+      //redefines this entire NewTicketForm component as the return value of connect()
       export default NewTicketForm;
+      //since connect() is just before export, the exported version is this redefined NewTicketForm
+      //export default connect()(NewTicketForm) syntax works, too

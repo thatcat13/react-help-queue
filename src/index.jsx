@@ -6,16 +6,25 @@ import App from './components/App';
 import { AppContainer } from 'react-hot-loader';
 import { HashRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
+import { createStore } from 'redux';
+import ticketListReducer from './reducers/ticket-list-reducer';
+import { Provider } from 'react-redux';
+
+const store = createStore(ticketListReducer);
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+);
+//^logs the store's current state to the console whenever updates occur
 
 //define render function here:
 const render = (Component) => {
   //Component is a constructor or a function; the word "Component" is a parameter and can be called anything
   ReactDOM.render(
-    <AppContainer>
       <HashRouter>
-        <Component/>      
-      </HashRouter>
-    </AppContainer>,
+        <Provider store={store}>
+          <Component/>
+        </Provider>
+      </HashRouter>,
     document.getElementById('react-app-root')
   );
 };
