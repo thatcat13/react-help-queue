@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Moment from 'moment';
 import { connect } from 'react-redux';
+import { v4 } from 'uuid';
 
 function NewTicketForm(props){
   let _names = null;
@@ -13,21 +13,18 @@ function NewTicketForm(props){
     event.preventDefault();
     const action = {
       type: 'ADD_TICKET',
-      id: null,
+      id: v4(),
       names: _names.value,
       location: _location.value,
       issue: _issue.value,
       timeOpen: new Moment()
     };
     dispatch(action);
-    //calling action invokes 'ADD_TICKET' in reducer.js
-    props.onNewTicketCreation({names: _names.value, location: _location.value, issue: _issue.value, timeOpen: new Moment()});
-//callback called timeOpen and set it equivalent to a Moment object containing the current time.
+    //^calling action invokes 'ADD_TICKET' in reducer.js
     _names.value = '';
     _location.value = '';
     _issue.value = '';
   }
-//onNewTicketCreation() is a PROP, guys--it references the handleAddingNewTicketToList() callback from the App component.
 
 
   return (
@@ -94,10 +91,6 @@ function NewTicketForm(props){
           </div>
         );
       }
-
-      NewTicketForm.propTypes = {
-        onNewTicketCreation: PropTypes.func
-      };
 
       NewTicketForm = connect()(NewTicketForm);
       //redefines this entire NewTicketForm component as the return value of connect()

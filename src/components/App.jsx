@@ -2,20 +2,20 @@ import React from 'react';
 import Header from './Header';
 import TicketList from './TicketList';
 import NewTicketControl from './NewTicketControl';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import Moment from 'moment';
 import Admin from './Admin';
-import { v4 } from 'uuid';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      masterTicketList: {},
       selectedTicket: null
     };
-    this.handleAddingNewTicketToList = this.handleAddingNewTicketToList.bind(this);
     this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this);
   }
 
@@ -30,24 +30,13 @@ class App extends React.Component {
     clearInterval(this.waitTimeUpdateTimer);
   }
 
-  updateTicketElapsedWaitTime() {
-    var newMasterTicketList = Object.assign({}, this.state.masterTicketList);
-    Object.keys(newMasterTicketList).forEach(ticketId => {
-      newMasterTicketList[ticketId].formattedWaitTime = (newMasterTicketList[ticketId].timeOpen).fromNow(true);
-    });
-    this.setState({masterTicketList: newMasterTicketList});
-  }
-
-  handleAddingNewTicketToList(newTicket){
-    var newTicketId = v4()
-    var newMasterTicketList = Object.assign({}, this.state.masterTicketList, {
-      [newTicketId]: newTicket
-    });
-    newMasterTicketList[newTicketId].formattedWaitTime = newMasterTicketList[newTicketId].timeOpen.fromNow(true);
-    this.setState({masterTicketList: newMasterTicketList});
-  }
-  //handleAddingNewTicketToList() callback from App.jsx is triggered when our form in NewTicketForm is submitted
-  //We can only alter state using setState(). And setState() takes a key value pair: The state value we're updating (masterTicketList in our case), and the new value we'd like to update it to.
+  // updateTicketElapsedWaitTime() {
+  //   var newMasterTicketList = Object.assign({}, this.state.masterTicketList);
+  //   Object.keys(newMasterTicketList).forEach(ticketId => {
+  //     newMasterTicketList[ticketId].formattedWaitTime = (newMasterTicketList[ticketId].timeOpen).fromNow(true);
+  //   });
+  //   this.setState({masterTicketList: newMasterTicketList});
+  // }
 
   handleChangingSelectedTicket(ticketId){
     this.setState({selectedTicket: ticketId});
@@ -61,32 +50,37 @@ class App extends React.Component {
     return (
       <div>
         <style jsx global>{`
-        body {
-          font-family: 'Roboto Mono', monospace;
-        }
-        `}</style>
+            body {
+              font-family: 'Roboto Mono', monospace;
+            }
+            `}</style>
 
-        <div style={container}>
-          <Header/>
-          <Switch>
-            <Route exact path='/' render={()=><TicketList ticketList={this.state.masterTicketList} />} />
-            <Route path='/newticket' render={()=><NewTicketControl onNewTicketCreation={this.handleAddingNewTicketToList} />} />
-            <Route path='/admin' render={(props)=><Admin ticketList={this.state.masterTicketList} currentRouterPath={props.location.pathname}
-              onTicketSelection={this.handleChangingSelectedTicket}
-              selectedTicket={this.state.selectedTicket}/>} />
+          <div style={container}>
+            <Header/>
+            <Switch>
+              <Route exact path='/' render={()=><TicketList ticketList={this.props.masterTicketList} />} />
+              <Route path='/newticket' render={()=><NewTicketControl />} />
+              <Route path='/admin' render={(props)=><Admin ticketList={this.props.masterTicketList} currentRouterPath={props.location.pathname}
+                onTicketSelection={this.handleChangingSelectedTicket}
+                selectedTicket={this.state.selectedTicket}/>} />
 
-          </Switch>
+            </Switch>
+          </div>
         </div>
-      </div>
-        );
-        }
+      );
+    }
+  }
 
-        }
+  const mapStateToProps = state => {
+    return {
+      masterTicketList: state
+    }
+    //key is React prop: value is Redux state items mapping to those props
+  }
 
+  App.propTypes = {
+    masterTicketList: PropTypes.object
+  };
 
-export default App;
-
-
-//In webpack.config.js, we declared index.jsx as our entry point responsible for loading our application. It does this by loading our parent component. The parent component, in turn, loads child components, which then load their child components, so on, and so forth.
-
-//Since we're breaking our application into multiple components, our index.jsx entry point will only need to load our App.jsx parent. We'll move most of the contents of index.jsx into App.jsx.
+export default withRouter(connect(mapStateToProps)(App));
+//wrap connect() with a React-Router method called withRouter
