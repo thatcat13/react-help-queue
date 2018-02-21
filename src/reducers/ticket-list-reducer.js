@@ -1,8 +1,10 @@
 export default (state = {}, action) => {
+  let newState;
+  const { names, location, issue, timeOpen, id, formattedWaitTime } = action;
+
   switch (action.type) {
   case 'ADD_TICKET':
-    const { names, location, issue, timeOpen, id } = action;
-    let newState = Object.assign({}, state, {
+    newState = Object.assign({}, state, {
       [id]: {
         names: names,
         location: location,
@@ -12,6 +14,17 @@ export default (state = {}, action) => {
       }
     });
     return newState;
+
+  case 'UPDATE_TIME':
+    const newTicket = Object.assign({}, state[id], {formattedWaitTime});
+    //^using Object.assign() to construct a copy of the ticket we're updating that ALSO includes an up-to-date formattedWaitTime
+    newState = Object.assign({}, state, {
+      [id]: newTicket
+    });
+    //^using Object.assign() AGAIN to reconstruct entire state object to include the newTicket entry we just compiled
+    //remember the reducer returns a slice it's responsible for; b/c this reducer is responsible for our list of tickets it must return the whole list, even though we're updating only ONE property on ONE ticket
+    return newState;
+
   default:
     return state;
   }
