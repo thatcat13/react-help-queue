@@ -73,7 +73,7 @@ class App extends React.Component {
 
   const mapStateToProps = state => {
     return {
-      masterTicketList: state
+      masterTicketList: state.masterTicketList
     }
     //key is React prop: value is Redux state items mapping to those props
   }

@@ -9,8 +9,9 @@ import { Switch, Route } from 'react-router-dom';
 import { createStore } from 'redux';
 import ticketListReducer from './reducers/ticket-list-reducer';
 import { Provider } from 'react-redux';
+import rootReducer from './reducers/index';
 
-const store = createStore(ticketListReducer);
+const store = createStore(rootReducer);
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 );
