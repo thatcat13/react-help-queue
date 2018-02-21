@@ -10,7 +10,7 @@ function ConfirmationQuestions(props){
     textAlign: 'center',
     padding: '10px',
     fontSize: '1.5em'
-  }
+  };
 
   const quessieButtonStyles = {
     width: '120px',
@@ -19,7 +19,7 @@ function ConfirmationQuestions(props){
     fontSize: '1em',
     fontWeight: 'bolder',
     boxShadow: '2px 1px 2px darkgrey'
-  }
+  };
   return (
     <div style={quessieStyles}>
       <p>Have you gone through all the steps on the 'Learn How to Program' debugging lesson?</p>

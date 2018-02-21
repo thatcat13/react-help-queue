@@ -87,13 +87,13 @@ function NewTicketForm(props){
           placeholder='Describe your issue.'
           ref={(textarea) => {_issue = textarea;}}/>
         <button type='submit'>Halp!</button>
-            </form>
-          </div>
-        );
-      }
+      </form>
+    </div>
+  );
+}
 
-      NewTicketForm = connect()(NewTicketForm);
-      //redefines this entire NewTicketForm component as the return value of connect()
-      export default NewTicketForm;
-      //since connect() is just before export, the exported version is this redefined NewTicketForm
-      //export default connect()(NewTicketForm) syntax works, too
+NewTicketForm = connect()(NewTicketForm);
+//redefines this entire NewTicketForm component as the return value of connect()
+export default NewTicketForm;
+//since connect() is just before export, the exported version is this redefined NewTicketForm
+//export default connect()(NewTicketForm) syntax works, too

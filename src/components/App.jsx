@@ -55,32 +55,32 @@ class App extends React.Component {
             }
             `}</style>
 
-          <div style={container}>
-            <Header/>
-            <Switch>
-              <Route exact path='/' render={()=><TicketList ticketList={this.props.masterTicketList} />} />
-              <Route path='/newticket' render={()=><NewTicketControl />} />
-              <Route path='/admin' render={(props)=><Admin ticketList={this.props.masterTicketList} currentRouterPath={props.location.pathname}
-                onTicketSelection={this.handleChangingSelectedTicket}
-                selectedTicket={this.state.selectedTicket}/>} />
+        <div style={container}>
+          <Header/>
+          <Switch>
+            <Route exact path='/' render={()=><TicketList ticketList={this.props.masterTicketList} />} />
+            <Route path='/newticket' render={()=><NewTicketControl />} />
+            <Route path='/admin' render={(props)=><Admin ticketList={this.props.masterTicketList} currentRouterPath={props.location.pathname}
+              onTicketSelection={this.handleChangingSelectedTicket}
+              selectedTicket={this.state.selectedTicket}/>} />
 
-            </Switch>
-          </div>
+          </Switch>
         </div>
-      );
-    }
+      </div>
+    );
   }
+}
 
-  const mapStateToProps = state => {
-    return {
-      masterTicketList: state.masterTicketList
-    }
-    //key is React prop: value is Redux state items mapping to those props
-  }
-
-  App.propTypes = {
-    masterTicketList: PropTypes.object
+const mapStateToProps = state => {
+  return {
+    masterTicketList: state.masterTicketList
   };
+  //key is React prop: value is Redux state items mapping to those props
+};
+
+App.propTypes = {
+  masterTicketList: PropTypes.object
+};
 
 export default withRouter(connect(mapStateToProps)(App));
 //wrap connect() with a React-Router method called withRouter

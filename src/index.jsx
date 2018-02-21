@@ -21,11 +21,11 @@ let unsubscribe = store.subscribe(() =>
 const render = (Component) => {
   //Component is a constructor or a function; the word "Component" is a parameter and can be called anything
   ReactDOM.render(
-      <HashRouter>
-        <Provider store={store}>
-          <Component/>
-        </Provider>
-      </HashRouter>,
+    <HashRouter>
+      <Provider store={store}>
+        <Component/>
+      </Provider>
+    </HashRouter>,
     document.getElementById('react-app-root')
   );
 };
