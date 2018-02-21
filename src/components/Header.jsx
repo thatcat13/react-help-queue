@@ -46,7 +46,7 @@ function Header(){
             `}</style>
       <h1 className="hq">Help Queue</h1><br></br>
       <div className="links">
-        <Link to="/">Home </Link> | <Link to="/newticket">Create Ticket</Link>| <Link to="/admin">Admins Only</Link>
+        <Link to="/">Home </Link>  <Link to="/newticket">Create Ticket</Link>  <Link to="/admin">Admins Only</Link>
       </div>
     </div>
   );

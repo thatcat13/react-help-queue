@@ -22,15 +22,24 @@ class App extends React.Component {
   }
 
   updateTicketElapsedWaitTime() {
-    // var newMasterTicketList = Object.assign({}, this.state.masterTicketList);
-    // Object.keys(newMasterTicketList).forEach(ticketId => {
-    //   newMasterTicketList[ticketId].formattedWaitTime = (newMasterTicketList[ticketId].timeOpen).fromNow(true);
-    // });
-    // this.setState({masterTicketList: newMasterTicketList});
+    const { dispatch } = this.props;
+    Object.keys(this.props.masterTicketList).map(ticketId => {
+      const ticket = this.props.masterTicketList[ticketId];
+      const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
+      const action = {
+        type: 'UPDATE_TIME',
+        id: ticketId,
+        formattedWaitTime: newFormattedWaitTime
+      };
+      dispatch(action);
+    });
+    //^map through the masterTicketList that App receives as props from Redux store
+    //^use each key (called ticketId in context above) to locate its corresponding ticket and timeOpen timestamp property, then calc a newFormattedWaitTime using Moment's fromNow()
+    //^then dispatch 'UPDATE_TIME' action to update ticket's store entry to include the updated wait time
+
   }
 
   render() {
-    console.log(this.state.masterTicketList);
     const container = {
       margin: '15px 35px'
     };
