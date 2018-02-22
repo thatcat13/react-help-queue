@@ -1,0 +1,82 @@
+NOTES ON REDUX:
+(from fullstackreact.com/mark erikson) plus NOTES ON OTHER STUFF TOO #feeltheburn
+
+my own reminders:
+Functional programming
+- Does not rely on data models yo. State is relevant here, state is the sole keeper of the key-value pairs
+- Functional programming manages subsets of those key-value pairs by taking them as arguments to functions (props in components) instead of importing/retrieving them as modeled data
+
+Persisting data
+- Data that preserves a previous version of itself when it's modified; can be considered immutable
+
+REST: aka ReSTful API (Representational State Transfer)
+- Uses HTTP requests to GET PUT POST and DELETE data
+- Stateless
+
+
+CRUD
+- Create, Read, Update, Delete (4 basic functions of persistent storage)
+- CRUD is also sometimes used to describe user interface conventions that facilitate viewing, searching, and changing information
+
+
+WHAT IS REDUX?
+- State management tool for JS apps.
+- Entire state of app is stored in one central location.
+- Each component of app can have direct access to state of app without having to send props down to child components OR using callbacks to send data back up to a parent
+
+WHY IS REDUX SO AWESOME?
+- Predictable state updates make it easier to understand how the data flows in the app
+- PURE reducer functions make logic easier to test
+- Centralizing state makes it easier to implememt things like logging changes to the data, or persisting data between page refreshes
+
+- Redux helps in tricky situations where multiple components want to share some or all of the data but are not closely related to each other.
+So, a `store` in redux is just a JS object with a few methods on it
+
+- Some devs put all their app data into the Redux store, but you can still keep some data in your components' local state
+
+DATA UPDATES
+- When updates to the store are necessary the path for updating the data in the store follows the same flow every time, no matter where the update is coming from, whether it's from a user's form input or fetching data from a REST API
+
+IMPROVED DEV TIME WITH HOT RELOADING
+- When Redux-connected components are reloaded, they will immediately read the current data from the Redux store, and render that data with the updated code
+(ability to 'live-edit' for UI)
+
+///////////////////////////////end
+
+HIGHER-ORDER COMPONENTS (HoCs): uses connect() and transforms a component into another component
+
+from freeCodeCamp:
+A HoC is a component that you can wrap around another component to pass it special props, and it’s typically created using a higher-order component factory function. Note that people commonly refer to the function itself as a “HoC”, which might not be 100% correct technically, but isn’t a big deal in practice.
+
+As an example, calling React Router’s withRouter factory function on <MyComponent>will wrap it in a new<withRouter(MyComponent)/> component that passes the Router prop to the afore-mentioned <MyComponent>.
+
+You can think of a HoC function as a golf caddie that follows their golfer around and hands them the club they need it. By themselves, the caddie can’t actually do anything with the golf clubs. They’re just there to give the golfer access to more tools.
+
+plus this:
+- A React codebase is made up of components.
+
+- These components are written using JSX.
+
+- Data flows from parent to children, except when it  comes to state, which originates inside a component.
+
+- Components possess a small set of lifecycle and utility methods.
+
+- Components can also be written as pure functions.
+
+- You should keep data logic and UI logic in separate components.
+
+- Higher-order components are a common pattern for giving a component access to new tools.
+
+PRESENTATIONAL vs CONTAINER
+- The CONTAINER component does the “dirty” global state work:
+    -is concerned with how things WORK
+    -never have any styles
+    -provide data and behavior to presentational or other container components
+    -often stateful, as they tend to serve as data sources
+    -usually generated using HoCs via connect() from React-Redux
+    Examples: UserPage, FollowersSidebar, StoryContainer, FollowedUserList
+- The PRESENTATIONAL component:
+    -is concerned with how things LOOK
+    -receive data and callbacks exclusively by props
+    -rarely have their own state (and if so, local/UI state)
+    -Examples: Page, Sidebar, Story, UserInfo, List
